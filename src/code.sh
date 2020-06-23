@@ -19,20 +19,21 @@ main() {
     echo "Truth: $truth_vcf_id"
     echo "Panel: $panel_bed_id"
     echo "Bed $high_conf_bed_id"
-    
-    # Run app for each query vcf
-    echo "starting loop"
 
+    parent_job_destination=$(dx describe $DX_JOB_ID | grep "^Output folder " | awk -F " " '{print $NF}')
+    echo "Parent job dest: $parent_job_destination"
+
+    # Run app for each query vcf
     for query_vcf in ${query_vcfs[@]}
     do
     	echo $query_vcf
     	if [[ $query_vcf != '{"$dnanexus_link":' ]]; then
     		query_vcf_id=$(echo $query_vcf | awk -F "}" '{print $1}' | sed s/"\""/""/g)
         	dx describe $query_vcf_id
-        	command="dx run $happy_applet_id -iquery_vcf=$query_vcf_id -itruth_vcf=$truth_vcf_id -ipanel_bed=$panel_bed_id -ihigh_conf_bed=$high_conf_bed_id -iprefix="test" -ina12878=$na12878"
+        	command="dx run $happy_applet_id -iquery_vcf=$query_vcf_id -itruth_vcf=$truth_vcf_id -ipanel_bed=$panel_bed_id -ihigh_conf_bed=$high_conf_bed_id -iprefix="test" -ina12878=$na12878 --destination=$parent_job_destination"
         	echo $command
         	eval $command
         fi
     done
-    echo $query_vcfs_path
+
 }
