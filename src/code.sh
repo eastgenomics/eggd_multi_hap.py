@@ -29,8 +29,9 @@ main() {
     	echo $query_vcf
     	if [[ $query_vcf != '{"$dnanexus_link":' ]]; then
     		query_vcf_id=$(echo $query_vcf | awk -F "}" '{print $1}' | sed s/"\""/""/g)
-        	dx describe $query_vcf_id
-        	command="dx run $happy_applet_id -iquery_vcf=$query_vcf_id -itruth_vcf=$truth_vcf_id -ipanel_bed=$panel_bed_id -ihigh_conf_bed=$high_conf_bed_id -iprefix="test" -ina12878=$na12878 --destination=$parent_job_destination"
+        	query_vcf_prefix=$(dx describe $query_vcf_id | grep "^Name " | awk -F " " '{print $NF}' | awk -F "_" '{print $1}')
+
+        	command="dx run $happy_applet_id -iquery_vcf=$query_vcf_id -itruth_vcf=$truth_vcf_id -ipanel_bed=$panel_bed_id -ihigh_conf_bed=$high_conf_bed_id -iprefix=$query_vcf_prefix -ina12878=$na12878 --destination=$parent_job_destination"
         	echo $command
         	eval $command
         fi
