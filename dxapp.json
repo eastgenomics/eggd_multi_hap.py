@@ -1,0 +1,74 @@
+{
+  "name": "multi_hap.py_v1.0.0",
+  "summary": "v1.0.0 - Use vcfeval and hap.py to calculate NGS performance metrics against truth set (based on precisionFDA app)",
+  "properties": {
+    "github release": "v1.0.0"
+  },
+  "dxapi": "1.0.0",
+  "inputSpec": [
+    {
+      "name": "query_vcfs",
+      "label": "Query VCFs",
+      "help": "VCF files containing queryset variants (.vcf or .vcf.gz)",
+      "optional": true,
+      "class": "array:file",
+      "patterns": ["*.vcf", "*.vcf.gz"]
+    },
+    {
+      "name": "truth_vcf",
+      "label": "Truth VCF",
+      "help": "VCF file containing truthset variants (.vcf or .vcf.gz)",
+      "optional": false,
+      "class": "file",
+      "patterns": ["*.vcf", "*.vcf.gz"]
+    },
+    {
+      "name": "panel_bed",
+      "label": "Panel BED",
+      "help": "BED containing region (e.g. panel) covered in queryset vcf",
+      "optional": false,
+      "class": "file",
+      "patterns": ["*.bed"]
+    },
+    {
+      "name": "high_conf_bed",
+      "label": "High Confidence BED",
+      "help": "BED containing high confidence region for truth set",
+      "optional": false,
+      "class": "file",
+      "patterns": ["*.bed"]
+    },
+    {
+      "name": "na12878",
+      "label": "Perform NA12878 stratification? (SEE README)",
+      "help": "If the truth set is NA12878, stratification of results will be performed. However this requires the instance type to be upgraded to at least 7GB of RAM and will take longer.",
+      "class": "boolean",
+      "default": false
+    },
+    {
+      "name": "happy_applet_id",
+      "label": "Applet ID of the happy app to be run",
+      "help": "Applet ID of the happy app to be run against each query vcf",
+      "optional": false,
+      "class": "string",
+      "patterns": ["*"]
+    }
+  ],
+  "runSpec": {
+    "systemRequirements": {
+      "*": {
+        "instanceType": "mem1_ssd1_v2_x2"
+      }
+    },
+    "file": "src/code.sh",
+    "release": "16.04",
+    "interpreter": "bash",
+    "distribution": "Ubuntu"
+  },
+  "access": {
+    "allProjects": "VIEW",
+    "network": [
+      "*"
+    ]
+  }
+}
