@@ -54,6 +54,16 @@
       "patterns": ["*"]
     }
   ],
+  "outputSpec": [
+    {
+      "name": "output",
+      "label": "output",
+      "help": "Output to enable inclusion in workflow. Not used",
+      "optional": true,
+      "class": "file",
+      "patterns": ["*"]
+    }
+  ],
   "runSpec": {
     "systemRequirements": {
       "*": {
