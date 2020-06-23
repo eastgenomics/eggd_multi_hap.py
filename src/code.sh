@@ -37,4 +37,9 @@ main() {
         fi
     done
 
+    touch multi_happy_output_file
+
+    output_file=$(dx upload multi_happy_output_file --brief)
+    dx-jobutil-add-output output "$output_file" --class=file
+
 }
