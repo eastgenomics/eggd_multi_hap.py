@@ -57,7 +57,7 @@
   "runSpec": {
     "systemRequirements": {
       "*": {
-        "instanceType": "mem1_ssd1_x2"
+        "instanceType": "mem1_ssd1_v2_x2"
       }
     },
     "file": "src/code.sh",
